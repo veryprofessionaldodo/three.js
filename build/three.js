@@ -17847,15 +17847,7 @@
 			if (opaqueObjects.length > 0) renderObjects(opaqueObjects, scene, camera);
 			if (transparentObjects.length > 0) renderObjects(transparentObjects, scene, camera); //
 
-			if (scene.isScene === true) scene.onAfterRender(_this, scene, camera); //
-
-			if (_currentRenderTarget !== null) {
-				// Generate mipmap if we're using any kind of mipmap filtering
-				textures.updateRenderTargetMipmap(_currentRenderTarget); // resolve multisample renderbuffers to a single-sample texture if necessary
-
-				textures.updateMultisampleRenderTarget(_currentRenderTarget);
-			} // Ensure depth buffer writing is enabled so it can be cleared on next render
-
+			if (scene.isScene === true) scene.onAfterRender(_this, scene, camera); // Ensure depth buffer writing is enabled so it can be cleared on next render
 
 			state.buffers.depth.setTest(true);
 			state.buffers.depth.setMask(true);
@@ -25272,7 +25264,7 @@
 			if (referenceFrame === undefined) referenceFrame = 0;
 			if (referenceClip === undefined) referenceClip = targetClip;
 			if (fps === undefined || fps <= 0) fps = 30;
-			var numTracks = targetClip.tracks.length;
+			var numTracks = referenceClip.tracks.length;
 			var referenceTime = referenceFrame / fps; // Make each track's values relative to the values at the reference frame
 
 			var _loop = function _loop(i) {

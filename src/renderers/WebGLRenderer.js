@@ -1064,20 +1064,6 @@ function WebGLRenderer( parameters ) {
 
 		if ( scene.isScene === true ) scene.onAfterRender( _this, scene, camera );
 
-		//
-
-		if ( _currentRenderTarget !== null ) {
-
-			// Generate mipmap if we're using any kind of mipmap filtering
-
-			textures.updateRenderTargetMipmap( _currentRenderTarget );
-
-			// resolve multisample renderbuffers to a single-sample texture if necessary
-
-			textures.updateMultisampleRenderTarget( _currentRenderTarget );
-
-		}
-
 		// Ensure depth buffer writing is enabled so it can be cleared on next render
 
 		state.buffers.depth.setTest( true );
