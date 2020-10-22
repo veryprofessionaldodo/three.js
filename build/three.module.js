@@ -23989,6 +23989,7 @@ function WebGLRenderer( parameters ) {
 
 	this.render = function ( scene, camera ) {
 
+		console.log("_1");
 		let renderTarget, forceClear;
 
 		if ( arguments[ 2 ] !== undefined ) {
@@ -24012,6 +24013,8 @@ function WebGLRenderer( parameters ) {
 
 		}
 
+		console.log("_2");
+
 		if ( _isContextLost === true ) return;
 
 		// reset caching for this frame
@@ -24020,19 +24023,24 @@ function WebGLRenderer( parameters ) {
 		_currentMaterialId = - 1;
 		_currentCamera = null;
 
+		console.log("_3");
 		// update scene graph
 
 		if ( scene.autoUpdate === true ) scene.updateMatrixWorld();
 
+		console.log("_4");
 		// update camera matrices and frustum
 
 		if ( camera.parent === null ) camera.updateMatrixWorld();
+		console.log("_5");
 
 		if ( xr.enabled === true && xr.isPresenting === true ) {
 
 			camera = xr.getCamera( camera );
 
 		}
+
+		console.log("_6");
 
 		//
 		if ( scene.isScene === true ) scene.onBeforeRender( _this, scene, camera, renderTarget || _currentRenderTarget );
@@ -24043,15 +24051,21 @@ function WebGLRenderer( parameters ) {
 		_projScreenMatrix.multiplyMatrices( camera.projectionMatrix, camera.matrixWorldInverse );
 		_frustum.setFromProjectionMatrix( _projScreenMatrix );
 
+		console.log("_7");
+
 		_localClippingEnabled = this.localClippingEnabled;
 		_clippingEnabled = clipping.init( this.clippingPlanes, _localClippingEnabled, camera );
 
 		currentRenderList = renderLists.get( scene, camera );
 		currentRenderList.init();
 
+		console.log("_8");
+
 		projectObject( scene, camera, 0, _this.sortObjects );
 
 		currentRenderList.finish();
+		
+		console.log("_9");
 
 		if ( _this.sortObjects === true ) {
 
@@ -24059,6 +24073,7 @@ function WebGLRenderer( parameters ) {
 
 		}
 
+		console.log("_10");
 		//
 
 		if ( _clippingEnabled === true ) clipping.beginShadows();
@@ -24068,6 +24083,8 @@ function WebGLRenderer( parameters ) {
 		shadowMap.render( shadowsArray, scene, camera );
 
 		currentRenderState.setupLights( camera );
+
+		console.log("_11");
 
 		if ( _clippingEnabled === true ) clipping.endShadows();
 
@@ -24081,6 +24098,8 @@ function WebGLRenderer( parameters ) {
 
 		}
 
+		console.log("_12");
+
 		//
 
 		background.render( currentRenderList, scene, camera, forceClear );
@@ -24093,6 +24112,7 @@ function WebGLRenderer( parameters ) {
 		if ( opaqueObjects.length > 0 ) renderObjects( opaqueObjects, scene, camera );
 		if ( transparentObjects.length > 0 ) renderObjects( transparentObjects, scene, camera );
 
+		console.log("_13");
 		//
 
 		if ( scene.isScene === true ) scene.onAfterRender( _this, scene, camera );
@@ -24102,6 +24122,8 @@ function WebGLRenderer( parameters ) {
 		state.buffers.depth.setTest( true );
 		state.buffers.depth.setMask( true );
 		state.buffers.color.setMask( true );
+		
+		console.log("_14");
 
 		state.setPolygonOffset( false );
 
@@ -24109,7 +24131,7 @@ function WebGLRenderer( parameters ) {
 
 		currentRenderList = null;
 		currentRenderState = null;
-
+		console.log("_15");
 	};
 
 	function projectObject( object, camera, groupOrder, sortObjects ) {
